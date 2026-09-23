@@ -24,8 +24,8 @@ export const payment = {
 export const contacts = {
   channelUrl: 'https://t.me/bonmo_club',
   channelLabel: 't.me/bonmo_club',
-  organizerUrl: 'https://t.me/lizaediz',
-  organizerHandle: '@lizaediz',
+  organizerUrl: 'https://t.me/lizaedix',
+  organizerHandle: '@lizaedix',
 };
 
 /** Максимальный размер чека */
