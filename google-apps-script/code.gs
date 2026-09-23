@@ -29,13 +29,13 @@ function doPost(e) {
     const receipt = decodeReceipt_(registration.receipt);
 
     // Таблица — главное хранилище: если сохранить не вышло, человек увидит ошибку и отправит ещё раз
-    saveToSpreadsheet_(registration, receipt);
+    const rowUrl = saveToSpreadsheet_(registration, receipt);
 
     // Уведомление — дополнительно: заявка уже сохранена, поэтому сбой Telegram не показываем,
     // иначе человек отправит заявку повторно и в таблице будет дубль
     try {
       const { token, chatId } = getTelegramSettings_();
-      sendToTelegram_(token, chatId, registration, receipt);
+      sendToTelegram_(token, chatId, formatMessage_(registration, rowUrl), receipt);
     } catch (error) {
       console.error('Заявка сохранена в таблицу, но не отправлена в Telegram:', error);
     }
@@ -72,6 +72,7 @@ function decodeReceipt_(receipt) {
 
 // ——— Таблица ———
 
+/** Сохраняет заявку и возвращает ссылку на её строку в таблице */
 function saveToSpreadsheet_({ name, telegram, meetings }, receipt) {
   const props = PropertiesService.getScriptProperties();
   const spreadsheetId = props.getProperty('SPREADSHEET_ID');
@@ -88,13 +89,17 @@ function saveToSpreadsheet_({ name, telegram, meetings }, receipt) {
   // Блокировка — чтобы две одновременные заявки не перепутали строки при добавлении ссылки на чек
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
+  let row;
   try {
     sheet.appendRow([now, asText_(name), asText_(telegram), asText_(meetings.join('\n')), '']);
+    row = sheet.getLastRow();
     const link = SpreadsheetApp.newRichTextValue().setText('открыть').setLinkUrl(file.getUrl()).build();
-    sheet.getRange(sheet.getLastRow(), HEADERS.indexOf('Чек') + 1).setRichTextValue(link);
+    sheet.getRange(row, HEADERS.indexOf('Чек') + 1).setRichTextValue(link);
   } finally {
     lock.releaseLock();
   }
+
+  return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit#gid=${sheet.getSheetId()}&range=A${row}`;
 }
 
 /** Текст, который таблица не примет за формулу или число (например, «=…» или «+7…») */
@@ -113,9 +118,7 @@ function getTelegramSettings_() {
   return { token, chatId };
 }
 
-function sendToTelegram_(token, chatId, registration, receipt) {
-  const text = formatMessage_(registration);
-
+function sendToTelegram_(token, chatId, text, receipt) {
   // Обычно заявка — одно сообщение: чек с подписью. Если текст не влезает в подпись — два сообщения.
   if (text.length <= CAPTION_LIMIT) {
     callTelegram_(token, 'sendDocument', { chat_id: chatId, document: receipt, caption: text, parse_mode: 'HTML' });
@@ -125,7 +128,7 @@ function sendToTelegram_(token, chatId, registration, receipt) {
   }
 }
 
-function formatMessage_({ name, telegram, meetings }) {
+function formatMessage_({ name, telegram, meetings }, rowUrl) {
   return [
     '<b>Новая заявка на встречу</b>',
     '',
@@ -133,6 +136,8 @@ function formatMessage_({ name, telegram, meetings }) {
     `<b>Телеграм:</b> ${escapeHtml_(telegram)}`,
     '<b>Встречи:</b>',
     ...meetings.map((meeting) => `• ${escapeHtml_(meeting)}`),
+    '',
+    `<a href="${escapeHtml_(rowUrl)}">Открыть в таблице</a>`,
   ].join('\n');
 }
 

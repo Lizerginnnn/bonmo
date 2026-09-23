@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "bonmo-form",
+      "name": "bonmo",
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["dev", "--hostname", "0.0.0.0", "--port", "3000"],
       "port": 3000

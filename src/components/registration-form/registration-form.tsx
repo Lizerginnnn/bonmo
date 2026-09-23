@@ -91,14 +91,14 @@ export function RegistrationForm({ onSent }: RegistrationFormProps) {
       <CheckboxGroup label="Выбери встречу, на которую хотите записаться" required error={shownError("meetings")}>
         {meetings.map((meeting) => (
           <Checkbox
-            key={meeting.id}
+            key={meeting}
             name="meetings"
-            value={meeting.title}
-            checked={values.meetings.includes(meeting.title)}
-            onChange={(event) => toggleMeeting(meeting.title, event.target.checked)}
+            value={meeting}
+            checked={values.meetings.includes(meeting)}
+            onChange={(event) => toggleMeeting(meeting, event.target.checked)}
             invalid={Boolean(shownError("meetings"))}
           >
-            {meeting.title}
+            {meeting}
           </Checkbox>
         ))}
       </CheckboxGroup>

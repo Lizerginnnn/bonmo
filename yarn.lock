@@ -367,9 +367,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bonmo-form@workspace:.":
+"bonmo@workspace:.":
   version: 0.0.0-use.local
-  resolution: "bonmo-form@workspace:."
+  resolution: "bonmo@workspace:."
   dependencies:
     "@types/node": "npm:^22"
     "@types/react": "npm:^19.3.0"

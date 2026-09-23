@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next';
 
-// На GitHub Pages сайт живёт в подпапке репозитория (/bonmo-form).
+// На GitHub Pages сайт живёт в подпапке репозитория (/bonmo).
 // Путь подставляет workflow деплоя, локально он пустой.
 const basePath = process.env.PAGES_BASE_PATH ?? '';
 

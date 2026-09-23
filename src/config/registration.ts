@@ -1,19 +1,18 @@
-// Всё, что меняется от встречи к встрече, — здесь.
+import liza from "../../LIZA.json";
 
-export type Meeting = {
-  /** Уникальный ключ, в заявку не попадает */
-  id: string;
-  /** Текст на карточке; он же уходит в заявку */
-  title: string;
-};
+// Встречи редактируются в LIZA.json в корне проекта
 
-export const meetings: Meeting[] = [
-  { id: '2026-09-20', title: '20 сентября — Шарлотта Бронте «Джейн Эйр»' },
-  {
-    id: '2026-10-04',
-    title: '4 октября — лекция «Реальная роль богов в жизни древних греков на примере "Одиссеи"»',
-  },
-];
+/** Встречи на форме; текст встречи уходит в заявку как есть */
+export const meetings: string[] = readMeetings(liza);
+
+function readMeetings(data: { meetings?: unknown }): string[] {
+  const list = data.meetings;
+  // Проверка при сборке: если в LIZA.json ошибка, сайт не соберётся и старая версия останется на месте
+  if (!Array.isArray(list) || !list.length || !list.every((item) => typeof item === "string" && item.trim())) {
+    throw new Error('LIZA.json: в "meetings" должен быть список встреч — непустых строк в кавычках через запятую');
+  }
+  return list.map((item: string) => item.trim());
+}
 
 export const payment = {
   phone: '89277253574',
