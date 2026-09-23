@@ -1,0 +1,55 @@
+.uploader__label {
+  margin-bottom: 12px;
+}
+
+.uploader__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.uploader__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--control-height);
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.uploader__button:hover {
+  border-color: rgba(var(--ink-rgb), 0.5);
+}
+
+.uploader__button:focus-within {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.uploader__button--invalid {
+  border-color: var(--wine);
+}
+
+/* Нативный input скрыт визуально, но остаётся доступен с клавиатуры */
+.uploader__control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.uploader__file-name {
+  min-width: 0;
+  word-break: break-all;
+}

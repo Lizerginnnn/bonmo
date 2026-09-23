@@ -1,0 +1,26 @@
+.field-error {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: grid-template-rows 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+}
+
+.field-error--shown {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: none;
+}
+
+.field-error__clip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.field-error__text {
+  display: block;
+  padding-top: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--wine);
+}

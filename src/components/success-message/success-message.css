@@ -1,0 +1,25 @@
+.success-message {
+  padding: 32px 0;
+  text-align: center;
+  animation: success-message-appear 0.5s ease both;
+}
+
+.success-message__heart {
+  margin-bottom: 24px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 60px;
+  line-height: 1;
+  color: var(--wine);
+}
+
+.success-message__bye {
+  margin-top: 24px;
+}
+
+@keyframes success-message-appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

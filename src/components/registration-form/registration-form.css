@@ -1,0 +1,13 @@
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.registration-form__actions {
+  padding-top: 8px;
+}
+
+.registration-form__send-error {
+  margin-top: 12px;
+}

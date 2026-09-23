@@ -1,0 +1,120 @@
+/* Варианты */
+
+.text--display {
+  font-size: 40px;
+  line-height: 0.95;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.text--title {
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.text--lead {
+  font-size: 20px;
+  line-height: 1.375;
+}
+
+.text--subtitle {
+  font-size: 24px;
+  line-height: 1.375;
+}
+
+.text--quote {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.text--eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--night);
+}
+
+.text--label {
+  display: block;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+.text--body {
+  font-size: 18px;
+  line-height: 1.375;
+}
+
+.text--meta {
+  font-size: 16px;
+  line-height: 1.625;
+  color: var(--soft);
+}
+
+.text--caption {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .text--display {
+    font-size: 52px;
+  }
+
+  .text--lead {
+    font-size: 24px;
+  }
+
+  .text--meta {
+    font-size: 18px;
+  }
+}
+
+/* Модификаторы — после вариантов, чтобы перебивать их цвет */
+
+.text--tone-ink {
+  color: var(--ink);
+}
+
+.text--tone-muted {
+  color: var(--muted);
+}
+
+.text--tone-soft {
+  color: var(--soft);
+}
+
+.text--tone-wine {
+  color: var(--wine);
+}
+
+.text--tone-night {
+  color: var(--night);
+}
+
+.text--align-start {
+  text-align: start;
+}
+
+.text--align-center {
+  text-align: center;
+}
+
+.text--accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+.text--weight-regular {
+  font-weight: 400;
+}
+
+.text--weight-medium {
+  font-weight: 500;
+}

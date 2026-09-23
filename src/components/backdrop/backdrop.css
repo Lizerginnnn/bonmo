@@ -1,0 +1,39 @@
+/* Не fixed: фиксированные элементы у краёв экрана Safari на iPhone берёт за цвет верхней и нижней панелей */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.backdrop__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+}
+
+.backdrop__blob--peach {
+  top: -128px;
+  left: -96px;
+  width: 420px;
+  height: 420px;
+  background: var(--peach);
+}
+
+.backdrop__blob--sage {
+  right: -120px;
+  bottom: -160px;
+  width: 480px;
+  height: 480px;
+  background: var(--sage);
+}
+
+.backdrop__blob--powder {
+  top: 33.333%;
+  right: 25%;
+  width: 300px;
+  height: 300px;
+  background: var(--powder);
+}

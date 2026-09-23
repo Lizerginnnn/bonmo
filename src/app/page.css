@@ -1,0 +1,15 @@
+.page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding-block: 64px;
+  }
+}

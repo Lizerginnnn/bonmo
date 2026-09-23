@@ -1,0 +1,22 @@
+:root {
+  --ink: #4a453f;
+  --ink-rgb: 74, 69, 63;
+  --ink-hover: #3a3631;
+  --paper: #f1efe8;
+  --milk: #fcffe9;
+  --powder: #e3c6cb;
+  --wine: #a4393b;
+  --night: #424f65;
+  --peach: #f6bd8b;
+  --sage: #a9bdac;
+
+  --line: rgba(var(--ink-rgb), 0.2);
+  --muted: rgba(var(--ink-rgb), 0.55);
+  --soft: rgba(var(--ink-rgb), 0.7);
+  --radius: 12px;
+  --control-height: 56px;
+
+  /* Переменные --font-open-sans и --font-playfair задаёт next/font в app/layout.tsx */
+  --font-sans: "Avrile Sans Condensed", var(--font-open-sans), "Arial Narrow", sans-serif;
+  --font-accent: var(--font-playfair), Georgia, serif;
+}

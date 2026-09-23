@@ -1,6 +1,20 @@
 .DS_Store
 .idea/
 .vscode/
-node_modules/
 
-.claude
+# зависимости
+node_modules/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+.pnp.*
+
+# сборка Next
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# локальные переменные окружения
+.env*.local
