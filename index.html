@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f1efe8" />
+    <title>Регистрация на встречи клуба бонмо́</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,400..700&family=Playfair+Display:ital,wght@1,400;1,500&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true">
+      <div class="blob blob--peach"></div>
+      <div class="blob blob--sage"></div>
+      <div class="blob blob--powder"></div>
+    </div>
+
+    <main class="page">
+      <div class="card">
+        <div id="formWrap">
+          <header class="intro">
+            <p class="intro__eyebrow">бонмо́</p>
+            <h1 class="intro__title">Привет, дорогой друг!</h1>
+            <p class="intro__lead">
+              Это форма регистрации на встречи клуба бонмо́. Мы находимся в
+              Петербурге, наши встречи проходят очно.
+            </p>
+            <div class="intro__meta">
+              <p>
+                Наш телеграм-канал —
+                <a
+                  class="link"
+                  href="https://t.me/bonmo_club"
+                  target="_blank"
+                  rel="noopener"
+                  >t.me/bonmo_club</a
+                >
+              </p>
+              <p>
+                Со всеми вопросами и предложениями обращайтесь к Лизе (тг
+                <a
+                  class="link"
+                  href="https://t.me/lizaediz"
+                  target="_blank"
+                  rel="noopener"
+                  >@lizaedix</a
+                >)
+              </p>
+            </div>
+          </header>
+
+          <form class="form" id="form" novalidate>
+            <ui-input
+              id="name"
+              label="Имя"
+              name="name"
+              autocomplete="given-name"
+              required
+            ></ui-input>
+
+            <ui-input
+              id="tg"
+              label="Ник в телеграм"
+              name="tg"
+              placeholder="@nickname"
+              autocomplete="off"
+              hint="(необходим для связи)"
+              required
+            ></ui-input>
+
+            <ui-checkbox-group
+              id="meetings"
+              label="Выбери встречу, на которую хотите записаться"
+              required
+            >
+              <ui-checkbox
+                name="meeting"
+                value="20 сентября — Шарлотта Бронте «Джейн Эйр»"
+                >20 сентября — Шарлотта Бронте «Джейн Эйр»</ui-checkbox
+              >
+              <ui-checkbox
+                name="meeting"
+                value='4 октября — лекция «Реальная роль богов в жизни древних греков на примере "Одиссеи"»'
+                >4 октября — лекция «Реальная роль богов в жизни древних греков
+                на примере "Одиссеи"»</ui-checkbox
+              >
+            </ui-checkbox-group>
+
+            <section class="pay">
+              <h2 class="pay__title">Оплата встречи</h2>
+              <p>
+                Для записи на встречу оплатите билет по номеру<br /><span
+                  class="pay__strong"
+                  >89277253574</span
+                >
+                АЛЬФА БАНК елизавета андреевна к.
+              </p>
+              <p>
+                Стоимость встречи — 700₽<br />
+                <span class="accent"
+                  >Первая встреча для новых участников клуба — 490₽</span
+                >
+              </p>
+            </section>
+
+            <ui-uploader
+              id="file"
+              label="Прикрепите скрин/чек, подтверждающий оплату"
+              name="file"
+              accept="image/*,.pdf"
+              hint="1 файл до 20 МБ."
+              required
+            ></ui-uploader>
+
+            <div class="form__actions">
+              <ui-button
+                id="submit"
+                type="submit"
+                loading-text="Отправляем…"
+                disabled
+                >Отправить</ui-button
+              >
+              <p class="form__send-error" id="sendError" hidden></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="success" id="success" role="status" hidden>
+          <p class="success__heart">♥</p>
+          <p class="success__text">
+            Ваша анкета отправлена. Мы постараемся отправить вам подтверждение
+            регистрации как можно быстрее, но если вам вдруг долго ничего не
+            приходит — напишите в тг
+            <a
+              class="link"
+              href="https://t.me/lizaediz"
+              target="_blank"
+              rel="noopener"
+              >@lizaediz</a
+            >
+          </p>
+          <p class="success__bye">До скорой встречи ♥ !</p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

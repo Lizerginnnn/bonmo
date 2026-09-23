@@ -1,0 +1,285 @@
+@import url("../ui/index.css");
+
+/*
+@font-face {
+  font-family: "Avrile Sans Condensed";
+  src: url("../fonts/AvrileSansCondensed-Regular.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Avrile Sans Condensed";
+  src: url("../fonts/AvrileSansCondensed-Medium.woff2") format("woff2");
+  font-weight: 500;
+}
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Однотонный фон под панелями браузера (Safari красит их в цвет краёв страницы) */
+html {
+  background: var(--paper);
+}
+
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  font-stretch: 75%;
+  font-variation-settings: "wdth" 75;
+  color: var(--ink);
+  background: var(--paper);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+/* -1% от размера шрифта каждого элемента: у body em посчиталось бы один раз от 16px и унаследовалось */
+*,
+*::before,
+*::after {
+  letter-spacing: -0.01em;
+}
+
+.link {
+  color: var(--night);
+  text-decoration: none;
+}
+
+.accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+/* Фоновые пятна. Не fixed: фиксированные элементы у краёв экрана
+   Safari на iPhone берёт за цвет верхней и нижней панелей */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.blob--peach {
+  top: -128px;
+  left: -96px;
+  width: 420px;
+  height: 420px;
+  background: var(--peach);
+}
+
+.blob--sage {
+  right: -120px;
+  bottom: -160px;
+  width: 480px;
+  height: 480px;
+  background: var(--sage);
+}
+
+.blob--powder {
+  top: 33.333%;
+  right: 25%;
+  width: 300px;
+  height: 300px;
+  background: var(--powder);
+}
+
+/* Раскладка */
+
+.page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+.card {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 30px 80px -40px rgba(var(--ink-rgb), 0.45);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+}
+
+/* Шапка */
+
+.intro {
+  margin-bottom: 40px;
+}
+
+.intro__eyebrow {
+  margin-bottom: 16px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  color: var(--night);
+}
+
+.intro__title {
+  font-size: 40px;
+  line-height: 0.95;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.intro__lead {
+  margin-top: 16px;
+  font-size: 20px;
+  line-height: 1.375;
+}
+
+.intro__meta {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.625;
+  color: rgba(var(--ink-rgb), 0.7);
+}
+
+/* Форма */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form__actions {
+  padding-top: 8px;
+}
+
+.form__send-error {
+  margin-top: 12px;
+  font-size: 16px;
+  color: var(--wine);
+}
+
+.pay {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: rgba(227, 198, 203, 0.55);
+  font-size: 18px;
+  line-height: 1.375;
+}
+
+.pay__title {
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.pay__strong {
+  font-weight: 500;
+}
+
+/* Экран после отправки */
+
+.success {
+  padding: 32px 0;
+  text-align: center;
+}
+
+.success__heart {
+  margin-bottom: 24px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 60px;
+  line-height: 1;
+  color: var(--wine);
+}
+
+.success__text {
+  font-size: 24px;
+  line-height: 1.375;
+}
+
+.success__bye {
+  margin-top: 24px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.fade-in {
+  animation: fade-in 0.5s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding-block: 64px;
+  }
+
+  .card {
+    padding: 48px;
+  }
+
+  .intro__title {
+    font-size: 52px;
+  }
+
+  .intro__lead {
+    font-size: 24px;
+  }
+
+  .intro__meta {
+    font-size: 18px;
+  }
+
+  .pay {
+    padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

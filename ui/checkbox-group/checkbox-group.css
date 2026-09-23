@@ -1,0 +1,28 @@
+ui-checkbox-group {
+  display: block;
+}
+
+.ui-checkbox-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.ui-checkbox-group__label {
+  padding: 0;
+  margin-bottom: 12px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+.ui-checkbox-group__required {
+  color: var(--wine);
+}
+
+.ui-checkbox-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

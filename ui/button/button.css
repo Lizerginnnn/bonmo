@@ -1,0 +1,57 @@
+ui-button {
+  display: inline-block;
+}
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: var(--control-height);
+  min-width: 180px;
+  padding: 0 32px;
+  border: none;
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--milk);
+  background: var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.ui-button:not(:disabled):hover {
+  background: var(--ink-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(var(--ink-rgb), 0.6);
+}
+
+.ui-button:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.ui-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.ui-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ui-button__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(252, 255, 233, 0.35);
+  border-top-color: var(--milk);
+  border-radius: 50%;
+  animation: ui-button-spin 0.7s linear infinite;
+}
+
+@keyframes ui-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
