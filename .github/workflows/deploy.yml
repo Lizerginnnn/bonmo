@@ -35,9 +35,8 @@ jobs:
       - run: yarn build
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          # Ключи для отправки — в Settings → Secrets and variables → Actions → Variables
-          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ vars.WEB3FORMS_ACCESS_KEY }}
-          NEXT_PUBLIC_SHEETS_ENDPOINT: ${{ vars.SHEETS_ENDPOINT }}
+          # Адрес Google Apps Script — в Settings → Secrets and variables → Actions → Variables
+          NEXT_PUBLIC_SUBMIT_ENDPOINT: ${{ vars.SUBMIT_ENDPOINT }}
 
       - uses: actions/upload-pages-artifact@v4
         with:

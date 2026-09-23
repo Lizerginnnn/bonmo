@@ -19,11 +19,12 @@ yarn typecheck
 Файлы и папки — в kebab-case, стили — обычный CSS по БЭМ (блок называется как файл компонента), без CSS Modules и Tailwind.
 
 ```
+google-apps-script/          скрипт-посредник: заявка → Telegram, и инструкция по установке
 src/
   app/                       layout (шрифты, мета), страница, глобальные стили
   config/registration.ts     встречи, цены, реквизиты, контакты — править здесь
   lib/
-    submit-registration.ts   отправка заявки (пока заглушка)
+    submit-registration.ts   отправка заявки в Google Apps Script
     cn.ts                    склейка классов
   design-system/             базовые элементы дизайна
     tokens.css               цвета, шрифты, размеры
@@ -41,9 +42,9 @@ src/
 
 ## Отправка заявки
 
-Вся отправка — в `src/lib/submit-registration.ts`. Пока в `yarn dev` заявка печатается в консоль и считается отправленной, а в собранном сайте отправка падает с ошибкой, чтобы никто не решил, что записался.
+Форма → Google Apps Script → Telegram (сообщение с чеком). Код скрипта и пошаговая установка — в [`google-apps-script/`](google-apps-script/README.md). На сайте только адрес скрипта, токен бота хранится в Google.
 
-Ключи для отправки задаются переменными окружения (см. `.env.example`). Всё с префиксом `NEXT_PUBLIC_` попадает в код страницы и видно всем — секреты (например, токен Telegram-бота) туда класть нельзя.
+На стороне сайта отправка — в `src/lib/submit-registration.ts`, адрес берётся из `NEXT_PUBLIC_SUBMIT_ENDPOINT` (см. `.env.example`). Если адрес не задан, в `yarn dev` заявка печатается в консоль и считается отправленной, а в собранном сайте отправка падает с ошибкой, чтобы никто не решил, что записался.
 
 ## Деплой на GitHub Pages
 
@@ -51,4 +52,4 @@ Workflow `.github/workflows/deploy.yml` собирает сайт при пуш�
 
 Один раз в репозитории: **Settings → Pages → Source: GitHub Actions**. Сайт будет по адресу `https://lizerginnnn.github.io/bonmo-form/`.
 
-Ключи отправки — в **Settings → Secrets and variables → Actions → Variables** (`WEB3FORMS_ACCESS_KEY`, `SHEETS_ENDPOINT`).
+Адрес скрипта — в **Settings → Secrets and variables → Actions → Variables** под именем `SUBMIT_ENDPOINT`.
