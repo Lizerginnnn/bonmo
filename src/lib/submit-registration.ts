@@ -3,7 +3,8 @@ export type Registration = {
   /** Всегда с @ в начале */
   telegram: string;
   meetings: string[];
-  receipt: File;
+  /** Чек необязателен */
+  receipt: File | null;
 };
 
 /** Адрес веб-приложения Google Apps Script (google-apps-script/code.gs) */
@@ -28,7 +29,7 @@ export async function submitRegistration(registration: Registration): Promise<vo
   const { receipt, ...fields } = registration;
   const payload = {
     ...fields,
-    receipt: { name: receipt.name, type: receipt.type, data: await toBase64(receipt) },
+    receipt: receipt && { name: receipt.name, type: receipt.type, data: await toBase64(receipt) },
   };
 
   // text/plain — чтобы браузер не делал CORS-preflight, который Apps Script не поддерживает

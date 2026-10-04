@@ -1,126 +1,84 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { meetings } from "@/config/registration";
 import { Button } from "@/design-system/button/button";
-import { Checkbox } from "@/design-system/checkbox/checkbox";
-import { Input } from "@/design-system/input/input";
 import { Text } from "@/design-system/text/text";
-import { Uploader } from "@/design-system/uploader/uploader";
 import { submitRegistration } from "@/lib/submit-registration";
-import { CheckboxGroup } from "../checkbox-group/checkbox-group";
 import { PaymentInfo } from "../payment-info/payment-info";
-import { fieldNames, hasErrors, validate, type FieldName, type FormValues } from "./validation";
+import { RhfCheckboxGroup } from "../rhf/rhf-checkbox-group";
+import { RhfInput } from "../rhf/rhf-input";
+import { RhfUploader } from "../rhf/rhf-uploader";
+import { registrationSchema, type FormValues, type ValidFormValues } from "./validation";
 import "./registration-form.css";
 
-const initialValues: FormValues = { name: "", telegram: "", meetings: [], receipt: null };
+const defaultValues: FormValues = { name: "", telegram: "", meetings: [], receipt: null };
 
 type RegistrationFormProps = {
   onSent: () => void;
 };
 
 export function RegistrationForm({ onSent }: RegistrationFormProps) {
-  const [values, setValues] = useState(initialValues);
-  // Ошибку поля показываем только после того, как с ним поработали
-  const [touched, setTouched] = useState<Set<FieldName>>(new Set());
-  const [sending, setSending] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid, isSubmitting },
+  } = useForm<FormValues, unknown, ValidFormValues>({
+    resolver: zodResolver(registrationSchema),
+    // Ошибку поля показываем только после того, как с ним поработали
+    mode: "onTouched",
+    defaultValues,
+  });
   const [sendFailed, setSendFailed] = useState(false);
 
-  const errors = validate(values);
-  const shownError = (field: FieldName) => (touched.has(field) ? errors[field] : "");
-
-  const touch = (field: FieldName) => setTouched((prev) => (prev.has(field) ? prev : new Set(prev).add(field)));
-
-  const update = <K extends FieldName>(field: K, value: FormValues[K]) =>
-    setValues((prev) => ({ ...prev, [field]: value }));
-
-  const toggleMeeting = (title: string, checked: boolean) => {
-    update("meetings", checked ? [...values.meetings, title] : values.meetings.filter((m) => m !== title));
-    touch("meetings");
-  };
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setTouched(new Set(fieldNames));
-    if (hasErrors(errors) || !values.receipt) return;
-
-    setSending(true);
+  async function onSubmit(values: ValidFormValues) {
     setSendFailed(false);
     try {
-      await submitRegistration({
-        name: values.name.trim(),
-        telegram: `@${values.telegram.trim().replace(/^@/, "")}`,
-        meetings: values.meetings,
-        receipt: values.receipt,
-      });
+      await submitRegistration(values);
       onSent();
     } catch (error) {
       console.error(error);
       setSendFailed(true);
-      setSending(false);
     }
   }
 
   return (
-    <form className="registration-form" onSubmit={handleSubmit} noValidate>
-      <Input
-        label="Имя"
-        name="name"
-        autoComplete="given-name"
-        required
-        value={values.name}
-        onChange={(event) => update("name", event.target.value)}
-        onBlur={() => touch("name")}
-        error={shownError("name")}
-      />
+    <form className="registration-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <RhfInput control={control} name="name" label="Имя" autoComplete="given-name" required />
 
-      <Input
-        label="Ник в телеграм"
+      <RhfInput
+        control={control}
         name="telegram"
+        label="Ник в телеграм"
         placeholder="@nickname"
         autoComplete="off"
         hint="(необходим для связи)"
         required
-        value={values.telegram}
-        onChange={(event) => update("telegram", event.target.value)}
-        onBlur={() => touch("telegram")}
-        error={shownError("telegram")}
       />
 
-      <CheckboxGroup label="Выбери встречу, на которую хотите записаться" required error={shownError("meetings")}>
-        {meetings.map((meeting) => (
-          <Checkbox
-            key={meeting}
-            name="meetings"
-            value={meeting}
-            checked={values.meetings.includes(meeting)}
-            onChange={(event) => toggleMeeting(meeting, event.target.checked)}
-            invalid={Boolean(shownError("meetings"))}
-          >
-            {meeting}
-          </Checkbox>
-        ))}
-      </CheckboxGroup>
+      <RhfCheckboxGroup
+        control={control}
+        name="meetings"
+        label="Выбери встречу, на которую хотите записаться"
+        options={meetings}
+        required
+      />
 
       <PaymentInfo />
 
-      <Uploader
-        label="Прикрепите скрин/чек, подтверждающий оплату"
+      <RhfUploader
+        control={control}
         name="receipt"
+        label="Прикрепите скрин/чек, подтверждающий оплату"
         accept="image/*,.pdf"
         hint="1 файл до 20 МБ."
-        required
-        file={values.receipt}
-        onFileChange={(file) => {
-          update("receipt", file);
-          touch("receipt");
-        }}
-        error={shownError("receipt")}
       />
 
       <div className="registration-form__actions">
-        <Button type="submit" disabled={hasErrors(errors)} loading={sending} loadingText="Отправляем…">
+        <Button type="submit" disabled={!isValid} loading={isSubmitting} loadingText="Отправляем…">
           Отправить
         </Button>
         {sendFailed && (

@@ -68,17 +68,18 @@ function parseRegistration_(e) {
   const meetings = Array.isArray(data.meetings)
     ? data.meetings.map(String)
     : [];
-  const receipt = data.receipt;
+  // Чек необязателен
+  const receipt = data.receipt && data.receipt.data ? data.receipt : null;
 
   if (!name || !telegram || !meetings.length)
     throw new Error("Не заполнены обязательные поля");
-  if (!receipt || !receipt.data) throw new Error("Нет чека");
 
   return { name, telegram, meetings, receipt };
 }
 
-/** Файл чека с понятным именем — одинаковым в Telegram и в папке на Диске */
+/** Файл чека с понятным именем — одинаковым в Telegram и в папке на Диске; null, если чек не прикрепили */
 function decodeReceipt_({ name, receipt }, date) {
+  if (!receipt) return null;
   return Utilities.newBlob(
     Utilities.base64Decode(receipt.data),
     receipt.type || "application/octet-stream",
@@ -115,7 +116,9 @@ function saveToSpreadsheet_({ name, telegram, meetings }, receipt, now) {
   if (!spreadsheetId || !folderId)
     throw new Error("Таблица не настроена: запустите setupSpreadsheet");
 
-  const file = DriveApp.getFolderById(folderId).createFile(receipt.copyBlob());
+  const file = receipt
+    ? DriveApp.getFolderById(folderId).createFile(receipt.copyBlob())
+    : null;
 
   const sheet =
     SpreadsheetApp.openById(spreadsheetId).getSheetByName(SHEET_NAME);
@@ -131,14 +134,16 @@ function saveToSpreadsheet_({ name, telegram, meetings }, receipt, now) {
       asText_(name),
       asText_(telegram),
       asText_(meetings.join("\n")),
-      "",
+      file ? "" : "нет",
     ]);
     row = sheet.getLastRow();
-    const link = SpreadsheetApp.newRichTextValue()
-      .setText("открыть")
-      .setLinkUrl(file.getUrl())
-      .build();
-    sheet.getRange(row, HEADERS.indexOf("Чек") + 1).setRichTextValue(link);
+    if (file) {
+      const link = SpreadsheetApp.newRichTextValue()
+        .setText("открыть")
+        .setLinkUrl(file.getUrl())
+        .build();
+      sheet.getRange(row, HEADERS.indexOf("Чек") + 1).setRichTextValue(link);
+    }
   } finally {
     lock.releaseLock();
   }
@@ -164,6 +169,15 @@ function getTelegramSettings_() {
 }
 
 function sendToTelegram_(token, chatId, text, receipt) {
+  if (!receipt) {
+    callTelegram_(token, "sendMessage", {
+      chat_id: chatId,
+      text: text,
+      parse_mode: "HTML",
+    });
+    return;
+  }
+
   // Обычно заявка — одно сообщение: чек с подписью. Если текст не влезает в подпись — два сообщения.
   if (text.length <= CAPTION_LIMIT) {
     callTelegram_(token, "sendDocument", {
@@ -185,7 +199,7 @@ function sendToTelegram_(token, chatId, text, receipt) {
   }
 }
 
-function formatMessage_({ name, telegram, meetings }, rowUrl) {
+function formatMessage_({ name, telegram, meetings, receipt }, rowUrl) {
   return [
     "<b>Новая заявка на встречу</b>",
     "",
@@ -193,6 +207,7 @@ function formatMessage_({ name, telegram, meetings }, rowUrl) {
     `<b>Телеграм:</b> ${escapeHtml_(telegram)}`,
     "<b>Встречи:</b>",
     ...meetings.map((meeting) => `• ${escapeHtml_(meeting)}`),
+    ...(receipt ? [] : ["", "<i>Чек не прикреплён</i>"]),
     "",
     `<a href="${escapeHtml_(rowUrl)}">Открыть в таблице</a>`,
   ].join("\n");

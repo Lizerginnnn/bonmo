@@ -1,10 +1,11 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { InputHTMLAttributes, ReactNode, Ref } from "react";
 
 import { cn } from "@/lib/cn";
 import { Text } from "../text/text";
 import "./checkbox.css";
 
 type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "className" | "children"> & {
+  ref?: Ref<HTMLInputElement>;
   children: ReactNode;
   /** Красная рамка — когда ошибка у всей группы */
   invalid?: boolean;

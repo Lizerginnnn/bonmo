@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, type InputHTMLAttributes } from "react";
+import { useId, type InputHTMLAttributes, type Ref } from "react";
 
 import { cn } from "@/lib/cn";
 import { FieldError } from "../field-error/field-error";
@@ -8,6 +8,7 @@ import { Text } from "../text/text";
 import "./input.css";
 
 type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
+  ref?: Ref<HTMLInputElement>;
   label: string;
   /** Подсказка под полем */
   hint?: string;

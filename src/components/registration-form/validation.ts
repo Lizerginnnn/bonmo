@@ -1,33 +1,24 @@
+import { z } from "zod";
+
 import { MAX_FILE_SIZE } from "@/config/registration";
 
-export type FormValues = {
-  name: string;
-  telegram: string;
-  meetings: string[];
-  receipt: File | null;
-};
+export const registrationSchema = z.object({
+  name: z.string().trim().min(1, "Напиши, как тебя зовут"),
+  telegram: z
+    .string()
+    .trim()
+    .min(1, "Нужен ник в телеграм, чтобы мы могли связаться")
+    // В заявку ник уходит всегда с @ в начале
+    .transform((telegram) => `@${telegram.replace(/^@/, "")}`),
+  meetings: z.array(z.string()).min(1, "Выбери хотя бы одну встречу"),
+  // Чек необязателен, но если прикрепили — проверяем размер и тип
+  receipt: z
+    .custom<File | null>((value) => value === null || value instanceof File)
+    .refine((file) => !file || file.size <= MAX_FILE_SIZE, "Файл больше 20 МБ")
+    .refine((file) => !file || /^image\/|application\/pdf/.test(file.type), "Подойдёт картинка или PDF"),
+});
 
-export type FieldName = keyof FormValues;
-export type FormErrors = Record<FieldName, string>;
-
-const rules: Record<FieldName, (values: FormValues) => string> = {
-  name: ({ name }) => (name.trim() ? "" : "Напиши, как тебя зовут"),
-  telegram: ({ telegram }) => (telegram.trim() ? "" : "Нужен ник в телеграм, чтобы мы могли связаться"),
-  meetings: ({ meetings }) => (meetings.length ? "" : "Выбери хотя бы одну встречу"),
-  receipt: ({ receipt }) => {
-    if (!receipt) return "Прикрепи скрин или чек";
-    if (receipt.size > MAX_FILE_SIZE) return "Файл больше 20 МБ";
-    if (!/^image\/|application\/pdf/.test(receipt.type)) return "Подойдёт картинка или PDF";
-    return "";
-  },
-};
-
-export const fieldNames = Object.keys(rules) as FieldName[];
-
-export function validate(values: FormValues): FormErrors {
-  return Object.fromEntries(fieldNames.map((field) => [field, rules[field](values)])) as FormErrors;
-}
-
-export function hasErrors(errors: FormErrors) {
-  return Object.values(errors).some(Boolean);
-}
+/** Значения полей формы */
+export type FormValues = z.input<typeof registrationSchema>;
+/** Проверенные и нормализованные значения — уходят в заявку */
+export type ValidFormValues = z.output<typeof registrationSchema>;

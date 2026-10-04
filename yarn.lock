@@ -14,6 +14,90 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^5.2.0":
+  version: 5.9.1
+  resolution: "@hookform/resolvers@npm:5.9.1"
+  dependencies:
+    "@standard-schema/utils": "npm:^0.3.0"
+  peerDependencies:
+    "@sinclair/typebox": ">=0.25.24"
+    "@standard-schema/spec": ^1.0.0
+    "@typeschema/main": ">=0.13.7"
+    "@vinejs/vine": ^2.0.0 || ^3.0.0 || ^4.0.0
+    ajv: ^8.12.0
+    ajv-errors: ^3.0.0
+    ajv-formats: ^2.1.1
+    arktype: ^2.0.0
+    ata-validator: ^1.2.0
+    class-transformer: ">=0.4.0"
+    class-validator: ">=0.12.0"
+    computed-types: ^1.0.0
+    effect: ^3.10.3
+    fluentvalidation-ts: ^3.0.0
+    fp-ts: ^2.7.0
+    io-ts: ^2.0.0
+    joi: ^17.0.0 || ^18.0.0
+    nope-validator: ">=0.12.0"
+    react-hook-form: ^7.55.0
+    superstruct: ">=0.12.0"
+    typanion: ^3.3.2
+    valibot: ">=0.31.0 || ^1.0.0-beta.4 || ^1.0.0-rc"
+    vest: ">=6.0.0"
+    yup: ^1.0.0
+    zod: ^3.25.0 || ^4.0.0
+  peerDependenciesMeta:
+    "@sinclair/typebox":
+      optional: true
+    "@standard-schema/spec":
+      optional: true
+    "@typeschema/main":
+      optional: true
+    "@vinejs/vine":
+      optional: true
+    ajv:
+      optional: true
+    ajv-errors:
+      optional: true
+    ajv-formats:
+      optional: true
+    arktype:
+      optional: true
+    ata-validator:
+      optional: true
+    class-transformer:
+      optional: true
+    class-validator:
+      optional: true
+    computed-types:
+      optional: true
+    effect:
+      optional: true
+    fluentvalidation-ts:
+      optional: true
+    fp-ts:
+      optional: true
+    io-ts:
+      optional: true
+    joi:
+      optional: true
+    nope-validator:
+      optional: true
+    superstruct:
+      optional: true
+    typanion:
+      optional: true
+    valibot:
+      optional: true
+    vest:
+      optional: true
+    yup:
+      optional: true
+    zod:
+      optional: true
+  checksum: 10c0/08d4e1455a072bea182468d878527e2e99c6d079fe56ffc5297e03a8219fe7544db092afcdf7a950e5421390d4dae3a21398c8ccd0b2c8639d0e0ff9e21410c2
+  languageName: node
+  linkType: hard
+
 "@img/colour@npm:^1.1.0":
   version: 1.1.0
   resolution: "@img/colour@npm:1.1.0"
@@ -322,6 +406,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@standard-schema/utils@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@standard-schema/utils@npm:0.3.0"
+  checksum: 10c0/6eb74cd13e52d5fc74054df51e37d947ef53f3ab9e02c085665dcca3c38c60ece8d735cebbdf18fbb13c775fbcb9becb3f53109b0e092a63f0f7389ce0993fd0
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.5.23":
   version: 0.5.23
   resolution: "@swc/helpers@npm:0.5.23"
@@ -371,13 +462,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bonmo@workspace:."
   dependencies:
+    "@hookform/resolvers": "npm:^5.2.0"
     "@types/node": "npm:^22"
     "@types/react": "npm:^19.3.0"
     "@types/react-dom": "npm:^19.3.0"
     next: "npm:16.3.6"
     react: "npm:^19.3.0"
     react-dom: "npm:^19.3.0"
+    react-hook-form: "npm:^7.62.0"
     typescript: "npm:^6"
+    zod: "npm:^4.1.0"
   languageName: unknown
   linkType: soft
 
@@ -504,6 +598,19 @@ __metadata:
   peerDependencies:
     react: ^19.3.0
   checksum: 10c0/c513044b724dd6bfe9500a9682d60973e7f8a48cffba00b6b16d3e910e27dcc459bf71bf0a5c33d7d62a3843ca30de1bd1e2098058aa4ed71f618a24b6061da5
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.62.0":
+  version: 7.89.0
+  resolution: "react-hook-form@npm:7.89.0"
+  peerDependencies:
+    "@types/react": "*"
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/efeefbacb6ded5e1c0eb0b740cab9e839b9b8018f692fe538f68295a0a655b42d1530a6aa00a47e34a272e429bd752f3ea8c8799b182ed8cf299a9966e90332a
   languageName: node
   linkType: hard
 
@@ -674,5 +781,12 @@ __metadata:
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+  languageName: node
+  linkType: hard
+
+"zod@npm:^4.1.0":
+  version: 4.6.5
+  resolution: "zod@npm:4.6.5"
+  checksum: 10c0/32eb6c5e98becbe045675b2141c3611451c16ba567f9779231d79af41c4d651ca1c22f154aef7e6c6e77b929f23e43f1154ca05b82e119e922353725d6776af5
   languageName: node
   linkType: hard
